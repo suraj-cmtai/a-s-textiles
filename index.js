@@ -5,6 +5,8 @@ const cors = require("cors");
 
 // Routes
 const contactRoutes = require("./routes/contactRoutes");
+const productRoutes = require("./routes/productRoutes");
+const productLeadsRoutes = require("./routes/productLeadsRoutes");
 
 const app = express();
 const port = 3000;
@@ -13,8 +15,16 @@ app.use(cors());
 // Middleware
 app.use(bodyParser.json());
 
+app.use(express.json());
+
+app.get("/", (req, res) => {
+    res.send("Hello, World!");
+});
+
 
 app.use("/v1/contacts", contactRoutes);
+app.use("/v1/products", productRoutes);
+app.use("/v1/product-leads", productLeadsRoutes);
 
 // Catch all route for 404 (route not found)
 app.use((req, res) => {

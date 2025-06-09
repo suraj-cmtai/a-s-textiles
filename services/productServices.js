@@ -66,8 +66,6 @@ module.exports = {
     createProduct,
     getProducts,
     getProductById,
-    getProductByEmail,
-    getProductByPhone,
     updateProduct,
     deleteProduct
 };

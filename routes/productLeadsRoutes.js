@@ -5,7 +5,7 @@ const {
     getProductLeadById,
     updateProductLead,
     deleteProductLead
-} = require('../services/productLeadServices');
+} = require('../services/productLeadsServices');
 const { successResponse, errorResponse } = require('../utils/responseManager');
 
 const router = express.Router();

@@ -1,5 +1,4 @@
-import sharp from "sharp";
-import { adminStorage } from "../config/firebase";
+const { adminStorage } = require( "../config/firebase");
 
 const UploadImage = async (file) => {
   try {
@@ -72,4 +71,4 @@ const ReplaceImage = async (file, oldImageUrl) => {
   }
 };
 
-export { UploadImage, ReplaceImage };
+module.exports = { UploadImage, ReplaceImage };
