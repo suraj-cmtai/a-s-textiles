@@ -39,43 +39,7 @@ const getProductLeadById = async (productLeadId) => {
     }
 }
 
-// Get a single productLead by email from Firestore
-const getProductLeadByEmail = async (email) => {
-    try {
-    const productLeadsRef = collection(db, "productLeads");
-    const q = query(productLeadsRef, where("email", "==", email));
-    const querySnapshot = await getDocs(q);
 
-    if (querySnapshot.empty) {
-      throw new Error("ProductLead not found");
-    }
-
-    // Assuming emails are unique, get the first match
-    const doc = querySnapshot.docs[0];
-    return { id: doc.id, ...doc.data() };
-    } catch (error) {
-        throw new Error("Error fetching productLead by email: " + error.message);
-    }
-}
-
-// Get a single productLead by phone number from Firestore
-const getProductLeadByPhone = async (phone) => {
-    try {
-        const productLeadsRef = collection(db, "productLeads");
-        const q = query(productLeadsRef, where("phone", "==", phone));
-        const querySnapshot = await getDocs(q);
-
-        if (querySnapshot.empty) {
-            throw new Error("ProductLead not found");
-        }
-
-        // Assuming phone numbers are unique, get the first match
-        const doc = querySnapshot.docs[0];
-        return { id: doc.id, ...doc.data() };
-    } catch (error) {
-        throw new Error("Error fetching productLead by phone: " + error.message);
-    }
-}
 
 // Update productLead data in Firestore
 const updateProductLead = async (productLeadId, productLeadData) => {
@@ -103,8 +67,6 @@ module.exports = {
     createProductLead,
     getProductLeads,
     getProductLeadById,
-    getProductLeadByEmail,
-    getProductLeadByPhone,
     updateProductLead,
     deleteProductLead
 };

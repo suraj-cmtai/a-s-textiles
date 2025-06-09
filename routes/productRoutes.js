@@ -8,21 +8,24 @@ const {
 } = require('../services/productServices');
 const { successResponse, errorResponse } = require('../utils/responseManager');
 
+
 const { UploadImage } = require('../controller/imageController');
 
 const router = express.Router();
 // Create a new product
 router.post('/newProduct', async (req, res) => {
     try {
-        const formData = req.body;
-        const image = req.files?.image;
+        const productData = req.body;
+        console.log(req.body);
+        const image = req.files && req.files.image ? req.files.image : null;
 
-        const productData = { ...formData };
-        
+   console.log('Received product data:', productData);
+        console.log('Received image:', image);
         // Upload image if provided
         let imageUrl = null;
         if (image) {
             imageUrl = await UploadImage(image);
+            console.log('Image uploaded successfully:', imageUrl);
             productData.imageUrl = imageUrl;
         }
         

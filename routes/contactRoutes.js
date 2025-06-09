@@ -4,7 +4,7 @@ const {
     getContacts,
     getContactById,
     updateContact,
-    deleteContact
+    deleteContact,
 } = require('../services/contactServices');
 const { successResponse, errorResponse } = require('../utils/responseManager');
 
@@ -40,27 +40,7 @@ router.get('/getContact/:id', async (req, res) => {
         errorResponse(res, error, 'Error fetching contact');
     }
 });
-// Get a single contact by email
-router.get('/getContactByEmail/:email', async (req, res) => {
-    try {
-        const email = req.params.email;
-        const contact = await getContactByEmail(email);
-        successResponse(res, contact, 'Contact fetched successfully');
-    } catch (error) {
-        errorResponse(res, error, 'Error fetching contact by email');
-    }
-});
 
-// Get a single contact by phone
-router.get('/getContactByPhone/:phone', async (req, res) =>{
-    try {
-        const phone = req.params.phone;
-        const contact = await getContactByPhone(phone);
-        successResponse(res, contact, 'Contact fetched successfully');
-    } catch (error) {
-        errorResponse(res, error, 'Error fetching contact by phone');
-    }
-});
 
 // Update contact data
 router.put('/updateContact/:id', async (req, res) => {

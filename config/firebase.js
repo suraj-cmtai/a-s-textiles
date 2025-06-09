@@ -1,6 +1,8 @@
 const { initializeApp } = require("firebase/app");
 const { getFirestore } = require("firebase/firestore");
 const { getDatabase } = require("firebase/database");
+const { getStorage } = require("firebase-admin/storage");
+
 const admin = require("firebase-admin");
 const dotenv = require("dotenv");
 
@@ -36,5 +38,6 @@ if (!admin.apps.length) {
 }
 // Realtime Database Initialization
 const rtdb = getDatabase(); // RTDB instance
+const adminStorage = getStorage(); // Firebase Storage
 
-module.exports = { db, admin, rtdb };
+module.exports = { db, admin, rtdb, adminStorage, app };

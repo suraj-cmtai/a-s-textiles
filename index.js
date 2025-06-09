@@ -16,6 +16,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use(express.json());
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
 
 app.get("/", (req, res) => {
     res.send("Hello, World!");

@@ -40,27 +40,7 @@ router.get('/getProductLead/:id', async (req, res) => {
         errorResponse(res, error, 'Error fetching productLead');
     }
 });
-// Get a single productLead by email
-router.get('/getProductLeadByEmail/:email', async (req, res) => {
-    try {
-        const email = req.params.email;
-        const productLead = await getProductLeadByEmail(email);
-        successResponse(res, productLead, 'ProductLead fetched successfully');
-    } catch (error) {
-        errorResponse(res, error, 'Error fetching productLead by email');
-    }
-});
 
-// Get a single productLead by phone
-router.get('/getProductLeadByPhone/:phone', async (req, res) =>{
-    try {
-        const phone = req.params.phone;
-        const productLead = await getProductLeadByPhone(phone);
-        successResponse(res, productLead, 'ProductLead fetched successfully');
-    } catch (error) {
-        errorResponse(res, error, 'Error fetching productLead by phone');
-    }
-});
 
 // Update productLead data
 router.put('/updateProductLead/:id', async (req, res) => {

@@ -2,30 +2,32 @@ const { adminStorage } = require( "../config/firebase");
 
 const UploadImage = async (file) => {
   try {
-    const arrayBuffer = await file.arrayBuffer(); // Convert Blob to ArrayBuffer
-    const buffer = Buffer.from(arrayBuffer); // Convert to Buffer
+    const buffer = file.data; // Buffer from express-fileupload
 
     const bucket = adminStorage.bucket();
-    const filePath = `stall-craft/${Date.now()}_${file.name}`; // Generate unique file path
+    const filePath = `images/${Date.now()}_${file.name}`;
     const firebaseFile = bucket.file(filePath);
 
-
     const blobStream = firebaseFile.createWriteStream({
-      metadata: { contentType: file.type },
+      metadata: { contentType: file.mimetype },
     });
 
     return new Promise((resolve, reject) => {
       blobStream.on("error", reject);
       blobStream.on("finish", async () => {
-        const [url] = await firebaseFile.getSignedUrl({ action: "read", expires: "03-09-2491" });
+        const [url] = await firebaseFile.getSignedUrl({
+          action: "read",
+          expires: "03-09-2491",
+        });
         resolve(url);
       });
-      blobStream.end(resizedBuffer);
+      blobStream.end(buffer); // Directly use the buffer
     });
   } catch (error) {
     throw new Error("Error uploading image: " + error.message);
   }
 };
+
 
 const ReplaceImage = async (file, oldImageUrl) => {
   try {
