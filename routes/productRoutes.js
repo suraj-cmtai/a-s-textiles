@@ -62,12 +62,26 @@ router.put('/updateProduct/:id', async (req, res) => {
     try {
         const productId = req.params.id;
         const productData = req.body;
+        console.log('Received update data:', productData);
+
+        const image = req.files && req.files.image ? req.files.image : null;
+        console.log('Received image:', image);
+
+        // Upload image if provided
+        let imageUrl = null;
+        if (image) {
+            imageUrl = await UploadImage(image);
+            console.log('Image uploaded successfully:', imageUrl);
+            productData.imageUrl = imageUrl;
+        }
+
         const updatedProduct = await updateProduct(productId, productData);
         successResponse(res, updatedProduct, 'Product updated successfully');
     } catch (error) {
         errorResponse(res, error, 'Error updating product');
     }
 });
+
 
 // Delete a product
 router.delete('/deleteProduct/:id', async (req, res) => {
