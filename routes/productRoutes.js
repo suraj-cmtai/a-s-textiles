@@ -67,11 +67,14 @@ router.put('/updateProduct/:id', async (req, res) => {
         const image = req.files && req.files.image ? req.files.image : null;
         console.log('Received image:', image);
 
-         // Upload image if provided
+        // Get existing product to access its imageUrl
+        const existingProduct = await getProductById(productId);
+
+        // Replace image if provided
         let imageUrl = null;
         if (image) {
-            imageUrl = await UploadImage(image);
-            console.log('Image uploaded successfully:', imageUrl);
+            imageUrl = await ReplaceImage(image, existingProduct.imageUrl);
+            console.log('Image replaced successfully:', imageUrl);
             productData.imageUrl = imageUrl;
         }
 
