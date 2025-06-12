@@ -45,7 +45,8 @@ const updateProduct = async (productId, productData) => {
     try {
         const productRef = doc(db, "products", productId);
         await setDoc(productRef, productData, { merge: true });
-        return { id: productId, ...productData };
+        const updatedDoc = await getDoc(productRef);
+        return { id: updatedDoc.id, ...updatedDoc.data() };
     } catch (error) {
         throw new Error("Error updating product: " + error.message);
     }
