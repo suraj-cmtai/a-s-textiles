@@ -61,7 +61,7 @@ router.get('/getProduct/:id', async (req, res) => {
 router.put('/updateProduct/:id', async (req, res) => {
     try {
         const productId = req.params.id;
-        const productData = req.body;
+        const productData = req.body || {};
         console.log('Received update data:', productData);
 
         const image = req.files && req.files.image ? req.files.image : null;
