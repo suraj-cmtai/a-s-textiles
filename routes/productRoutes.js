@@ -9,7 +9,7 @@ const {
 const { successResponse, errorResponse } = require('../utils/responseManager');
 
 
-const { UploadImage } = require('../controller/imageController');
+const { UploadImage, ReplaceImage } = require('../controller/imageController');
 
 const router = express.Router();
 // Create a new product
@@ -70,7 +70,10 @@ router.put('/updateProduct/:id', async (req, res) => {
         // Upload image if provided
         let imageUrl = null;
         if (image) {
-            imageUrl = await UploadImage(image);
+            imageUrl = await ReplaceImage(image, productData.imageUrl);
+            if (!imageUrl) {
+                errorResponse(res, new Error('Image upload failed'), 'Error uploading image');
+            }
             console.log('Image uploaded successfully:', imageUrl);
             productData.imageUrl = imageUrl;
         }
