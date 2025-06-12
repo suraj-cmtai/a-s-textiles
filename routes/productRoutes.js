@@ -67,13 +67,10 @@ router.put('/updateProduct/:id', async (req, res) => {
         const image = req.files && req.files.image ? req.files.image : null;
         console.log('Received image:', image);
 
-        // Upload image if provided
+         // Upload image if provided
         let imageUrl = null;
         if (image) {
-            imageUrl = await ReplaceImage(image, productData.imageUrl);
-            if (!imageUrl) {
-                errorResponse(res, new Error('Image upload failed'), 'Error uploading image');
-            }
+            imageUrl = await UploadImage(image);
             console.log('Image uploaded successfully:', imageUrl);
             productData.imageUrl = imageUrl;
         }
