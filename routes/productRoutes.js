@@ -36,11 +36,21 @@ router.post('/newProduct', async (req, res) => {
     }
 });
 
-// Get all products
+// Get all products with pagination, sorting, and filtering
 router.get('/getallProducts', async (req, res) => {
     try {
-        const products = await getProducts();
-        successResponse(res, products, 'Products fetched successfully');
+        const queryParams = {
+            page: parseInt(req.query.page) || 1,
+            limit: parseInt(req.query.limit) || 10,
+            skip: parseInt(req.query.skip) || 0,
+            sortBy: req.query.sortBy || 'title',
+            sortOrder: req.query.sortOrder || 'asc',
+            title: req.query.title || '',
+            category: req.query.category || ''
+        };
+
+        const result = await getProducts(queryParams);
+        successResponse(res, result, 'Products fetched successfully');
     } catch (error) {
         errorResponse(res, error, 'Error fetching products');
     }
